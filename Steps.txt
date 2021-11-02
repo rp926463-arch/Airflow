@@ -1,0 +1,80 @@
+@@Start Airflow webserver
+source sandbox/bin/activate
+cd airflow
+airflow webserver --port 8080
+
+@@Open another terminal & start Scheduler
+source sandbox/bin/activate
+cd airflow
+airflow scheduler
+
+
+@@launch SQlite DB to check table
+>>sqlite3 airflow.db
+>>.tables
+>>drop table users;
+
+@@Execute individual tasks of airflow
+airflow tasks test user_processing creating_table 2020-01-01
+airflow tasks test user_processing is_api_available 2020-01-01
+airflow tasks test user_processing extracting_user 2020-01-01
+airflow tasks test user_processing processing_user 2020-01-01
+airflow tasks test user_processing storing_user 2020-01-01
+
+
+@@API used to get users data
+https://randomuser.me/
+pip install apache-airflow-providers-http==2.0.0
+
+@@Basic commands
+ls -ltr /tmp
+cat /tmp/processed_user.csv
+history | grep airflow.db
+
+@@Add new connection in for DAG
+Install provide >> Admin >> Connections >> Add new record
+
+@@Install provide
+e.g. Install http provider
+$pip install apache-airflow-providers-http==2.0.0
+
+@@Cron Schedule Format : https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules
+
+_________________________________________________________________________________________
+@.What is providers
+--it is independent python package that brings everything your need to interact with a service or a tool such as Spark or AWS.
+e.g. inorder to install 3-rd party connector use 
+source sandbox/bin/activate
+cd airflow
+pip install apache-airflow-providers-http==2.0.0
+__________________________________________________________________________________________
+
+--Apache airflow is a workflow engine that will easily scedule and run your complex data pipelines.it will make sure that each task of your data pipeline will get executed in a correct order and each task gets the required resources.
+
+Features::
+--if you have python knowledge you are good to go
+--free and opensource
+--Robust integrations with all cloud(Avoid vendor locking)
+--Use standard python code [You can use python to create simple to complex workflows with complete flexibility]
+--Amazing user interface : You can monitor and manage your workflows. it will allow you to check the status of competed and ongoing tasks.  
+
+CONCEPTS::
+1)DAG--In Airflow all workflows are DAG. DAG consist of operators. An Operator defines individual task that needs to be performed. There are differant types of operators available
+--BashOperator : execute Bash Commmand
+--PythonOperator : calls an arnitary python funnction
+--EmailOperaor : send an email
+--SimpleHttpOperator : sends an HTTP request
+--MysqlOperator, SqliteOperator, PostgresOperator, MsSqlOperator, OracleOperator, JdbcOperator, etc.
+--Sensor : waits for certain time,file,DB row,S3 key etc.
+You can also create your custom operator as per your need.
+
+2)WebServer : It is UI build on flask, it allows us to monitor status of DAGs & trigger them.
+
+3)MetaData DataBase : Airflow stores status of all tasks in DB & do all read/write operatons of workflow from here.
+
+4)Scheduler : this component is responsible for scheduling the execution of DAGs. it retrives & update status of tasks in database.
+
+5)Executor : Class define how your tasks should be executed.
+
+6)Worker : Process/ sub Process executing the task.
+_________________________________________________________________________________________
