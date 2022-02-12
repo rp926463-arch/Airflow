@@ -16,10 +16,11 @@ import pandas as pd
 default_args = {
     'start_date' : datetime(2020,1,1)
 }
+'''
 def my_func():
     print('Hello from my_func')
     return 'hello from my_func'
-
+'''
 def processing_user(ti):
     users = ti.xcom_pull(task_ids=['extracting_user'])
     if not len(users) or 'results' not in users[0]:
@@ -70,7 +71,7 @@ with DAG('user_processing', schedule_interval='@daily'
         log_response=True
     )
 
-    python_task	= PythonOperator(task_id='python_task', python_callable=my_func)
+    #python_task	= PythonOperator(task_id='python_task', python_callable=my_func)
 
     processing_user = PythonOperator(
         task_id='processing_user',
