@@ -1,0 +1,65 @@
+
+Tutorial: https://www.freecodecamp.org/news/install-apache-airflow-on-windows-without-docker/
+
+launch airflow project in VSC:
+>> cd airflow
+>> code .
+
+
+Access WSL Files on Windows
+	\\wsl$\Ubuntu-22.04\home\rp926463\airflow
+	\\wsl.localhost\Ubuntu-22.04\home\rp926463
+
+Airflow commands
+	airflow dags list
+	Launch airflow:
+		source airflow_env/bin/activate
+		airflow scheduler 
+		airflow webserver -p 8081
+
+
+
+Steps to write Airflow pipeline :
+	1.	import modules.
+	2.	define arguments.
+	3.	instantiate DAG.
+	4.	Lay all the tasks.
+	5.	set up dependencies.
+
+
+
+
+
+Using Docker
+	1. Install Docker Desktop : https://docs.docker.com/desktop/install/windows-install/
+	2. Installl docker compose
+		On Windows : >>Run PowerShell as an administrator
+					 >>Start-BitsTransfer -Source "https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-windows-x86_64.exe" -Destination $Env:ProgramFiles\Docker\docker-compose.exe
+
+
+		mkdir airflow-docker
+		cd airflow-docker
+		get file at : https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml
+		mkdir dags plugins logs
+		echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
+		docker-compose up airflow-init
+		docker-compose up
+
+
+	Check health of all resource : docker ps
+
+	docker exec b1cb13bc94b0 airflow version
+
+	restart airflow image : docker-compose down & docker-compose up
+
+	Access API : https://www.youtube.com/watch?v=aTaytcxy2Ck
+			 
+
+
+
+
+
+Tutorials
+https://www.youtube.com/watch?v=CGxxVj13sOs
+https://www.youtube.com/watch?v=43wHwwZhJMo
+https://www.youtube.com/watch?v=2v9AKewyUEo
